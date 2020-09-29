@@ -3,12 +3,15 @@
     text-decoration: none;
     font: normal 1.6em 幼圆;
     color: #86DCF0;
+    padding: 2px 5px;
+    border-radius: 5px;
 }
 
 #top a:hover, a:active {
     color: white;
     background: #8BDDF2;
 }
+
 #top nav li {
     float: left;
     width: 100px;
@@ -29,4 +32,20 @@
 
 #log {
     list-style-image: url("../images/imform.svg");
+}
+
+#licence {
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #000;
+}
+
+#login, #reset {
+    background: #4EA4DC;
+    color: white;
+    width: 52px;
+    padding: 2px 5px;
+    font: normal 1em 幼圆;
+    border: 0;
+    border-radius: 5px;
 }
