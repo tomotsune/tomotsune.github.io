@@ -1,0 +1,10 @@
+#bottom {
+    background: black;
+}
+
+
+#bottom a:link {
+    text-decoration: none;
+    font: normal 1.2em 幼圆;
+    color: white;
+}

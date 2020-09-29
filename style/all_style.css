@@ -1,0 +1,19 @@
+body, ul, ol, dl, li, p, h1, h2, h3, h4, h5, h6, form {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 62.5%;
+}
+
+.first_logo {
+    color: #74D8F1;
+    font: normal 2em 幼圆;
+}
+
+.second_logo {
+    color: #4EA4DC;
+    font: normal 2em 幼圆;
+
+}

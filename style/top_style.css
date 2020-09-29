@@ -1,0 +1,32 @@
+
+#top a:link, a:visited {
+    text-decoration: none;
+    font: normal 1.6em 幼圆;
+    color: #86DCF0;
+}
+
+#top a:hover, a:active {
+    color: white;
+    background: #8BDDF2;
+}
+#top nav li {
+    float: left;
+    width: 100px;
+}
+
+#home {
+    margin-left: 20px;
+    list-style-image: url("../images/home.svg");
+}
+
+#game {
+    list-style-image: url("../images/game.svg");
+}
+
+#photo {
+    list-style-image: url("../images/photo.svg");
+}
+
+#log {
+    list-style-image: url("../images/imform.svg");
+}
