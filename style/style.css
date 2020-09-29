@@ -1,9 +1,12 @@
 
-.first_logo_color{
+.first_logo{
     color:#74D8F1 ;
+    font: normal 2em 幼圆;
 }
-.second_logo_color{
+.second_logo{
     color: #4EA4DC;
+    font: normal 2em 幼圆;
+
 }
 .menu{
     color: #8BDDF2;
@@ -12,19 +15,24 @@
     background: black;
 }
 
-footer > a:link{
-    font-size: 12px;
-    color: white;
+
+header > a:link, a:visited{
     text-decoration: none;
-}
-header > a:link{
-    text-decoration: none;
-    font-size: 14px;
+    font: normal 1.4em 幼圆;
     color: #86DCF0;
 }
-header > a:hover{
+header > a:hover, a:active{
     text-decoration: none;
-    font-size: 14px;
+    font: normal 1.4em 幼圆;
+
     color: white;
     background:#8BDDF2 ;
+}
+footer > a:link{
+    text-decoration: none;
+    font: normal 1.2em 幼圆;
+    color: white;
+}
+body{
+    font-size: 62.5%;
 }
