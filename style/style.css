@@ -1,38 +1,58 @@
 
-.first_logo{
-    color:#74D8F1 ;
+.first_logo {
+    color: #74D8F1;
     font: normal 2em 幼圆;
 }
-.second_logo{
+
+.second_logo {
     color: #4EA4DC;
     font: normal 2em 幼圆;
 
 }
-.menu{
+
+.menu {
     color: #8BDDF2;
 }
-.bottom{
+
+.bottom {
     background: black;
 }
 
+header nav li{
+    float: left;
+    width: 100px;
 
-header > a:link, a:visited{
+}
+#game {
+    list-style-image: url("../images/game.svg");
+
+}
+
+#photo {
+    list-style-image: url("../images/photo.svg");
+}
+
+#log {
+    list-style-image: url("../images/imform.svg");
+}
+
+header a:link, a:visited {
     text-decoration: none;
     font: normal 1.4em 幼圆;
     color: #86DCF0;
 }
-header > a:hover, a:active{
-    text-decoration: none;
-    font: normal 1.4em 幼圆;
 
+header a:hover, a:active {
     color: white;
-    background:#8BDDF2 ;
+    background: #8BDDF2;
 }
-footer > a:link{
+
+footer > a:link {
     text-decoration: none;
     font: normal 1.2em 幼圆;
     color: white;
 }
-body{
+
+body {
     font-size: 62.5%;
 }
