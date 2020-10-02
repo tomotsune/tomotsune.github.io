@@ -29,7 +29,7 @@
 #container .wrapper .main {
     width: 100%;
     height: 400px;
-    background: #4EA4DC;
+    /*background: #4EA4DC;*/
     float: left;
 }
 
@@ -71,7 +71,7 @@
 
 h1 {
     text-align: center;
-    font-size: 50px;
+    font-size: 4em;
 }
 
 #ct_img {
