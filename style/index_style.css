@@ -16,7 +16,7 @@
  */
 #container .wrapper {
     overflow: hidden;
-    padding: 0 200px;
+/*    padding: 0 200px;*/
     min-width: 300px;
     margin: 10px 0;
 }
