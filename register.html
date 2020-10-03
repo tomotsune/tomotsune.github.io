@@ -17,58 +17,97 @@
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        table, form {
+            width: 500px;
+            border: 1px solid #CCC;
+            margin: 0 auto;
+            line-height: 30px;
+        }
+
+        td, th {
+            border: 1px solid #CCC;
+        }
+
+        .btn-right {
+            text-align: right;
+        }
+    </style>
+
 
 </head>
 <body>
 <div class="container">
-    <table style="width: 500px; margin:0 auto">
+    <!--  table>(thead>tr>th*6)+(tbody>tr>td*6)+tfoot>tr>td*6-->
+    <table >
         <thead>
         <tr>
-            <th><label for="all">全选 </label><input type="checkbox" id="all"></th>
-            <th>序号</th>
+            <th><label for="all">all</label><input type="checkbox" id="all"></th>
             <th>姓名</th>
             <th>年龄</th>
             <th>性别</th>
-            <th>爱好</th>
+            <th>电话</th>
+            <th>操作</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="mainFrm">
         <tr>
             <td><input type="checkbox" name="item"></td>
-            <td>1</td>
             <td>tom</td>
-            <td>age</td>
+            <td>20</td>
             <td>male</td>
-            <td>eat</td>
+            <td>120</td>
+            <td>
+                <button>remove</button>
+            </td>
         </tr>
         <tr>
             <td><input type="checkbox" name="item"></td>
-            <td>2</td>
-            <td>tom</td>
-            <td>age</td>
+            <td>jack</td>
+            <td>20</td>
             <td>male</td>
-            <td>eat</td>
+            <td>120</td>
+            <td>
+                <button>remove</button>
+            </td>
         </tr>
         <tr>
             <td><input type="checkbox" name="item"></td>
-            <td>3</td>
-            <td>tom</td>
-            <td>age</td>
+            <td>alice</td>
+            <td>20</td>
             <td>male</td>
-            <td>eat</td>
-        </tr>
-        <tr>
-            <td><input type="checkbox" name="item"></td>
-            <td>4</td>
-            <td>tom</td>
-            <td>age</td>
-            <td>male</td>
-            <td>eat</td>
+            <td>120</td>
+            <td>
+                <button>remove</button>
+            </td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                <button id="remove_all">remove all</button>
+            </td>
+            <td colspan="5" class="btn-right">
+                <button id="remove_first">remove first</button>
+                <button id="remove_last">remove last</button>
+            </td>
+        </tr>
+        </tfoot>
     </table>
+    <hr>
+
+    <form id="frm">
+        <label for="name">name:</label><input type="text" id="name"><br>
+        <label for="age">age:</label><input type="text" id="age"><br>
+        <label for="male">male:</label><input type="radio" name="sex" id="male" checked>
+        <label for="female">female:</label><input type="radio" name="sex" id="female"><br>
+        <label for="phone">phone:</label><input type="text" id="phone"><br>
+        <input type="button" value="add" id="btn_add">
+        <input type="reset" value="reset" id="btn_reset">
+    </form>
+
 </div>
-<script>
+<!--<script>
     /*    document.getElementById("all").addEventListener("change",function () {
             for (let item of document.getElementsByName("item")) {
                 item.checked=this.checked;
@@ -90,7 +129,9 @@
             }
         });
     });
-</script>
+</script>-->
+
+<script src="script/register.js"></script>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
