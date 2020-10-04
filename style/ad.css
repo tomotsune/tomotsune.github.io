@@ -1,0 +1,30 @@
+.d1 {
+    width: 524px;
+    height: 190px;
+    border: 1px solid #CCC;
+    position: relative;
+    margin: 0 auto;
+}
+.d2{
+    position: absolute;
+    bottom: 15px;
+    right: 50px;
+}
+#img{
+    width: 524px;
+    height: 190px;
+}
+.d2 span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    text-align: center;
+    line-height: 20px;
+    font-size: 13px;
+    border: 1px solid #CCC;
+}
+span.active{
+    background: #333;
+    color: #fff;
+}
