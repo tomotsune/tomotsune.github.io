@@ -1,0 +1,10 @@
+.error{
+    font-size: 12px;
+    color: red;
+}
+.success{
+    color: green;
+}
+form{
+    line-height: 30px;
+}
