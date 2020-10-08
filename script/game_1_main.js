@@ -202,10 +202,12 @@ $(document).on({
         }
     },
     touchstart: function (event) {
+        event.preventDefault();//阻止事件的默认行为, 即阻止上下方向键控制滚动条滚动.
         startX = event.originalEvent.touches[0].pageX;
         startY = event.originalEvent.touches[0].pageY;
     },
     touchend: function (event) {
+        event.preventDefault();//阻止事件的默认行为, 即阻止上下方向键控制滚动条滚动.
         endX = event.originalEvent.changedTouches[0].pageX;
         endY = event.originalEvent.changedTouches[0].pageY;
 
