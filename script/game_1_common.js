@@ -4,14 +4,24 @@
 
 'use strict';
 
+//获取移动端尺寸
+/*let screenWidth = window.screen.availWidth;//获取屏幕宽度.*/
+let documentWith = document.documentElement.clientWidth;//页面DOM宽度
+let containerWidth = documentWith*0.92;//容器宽度
+let cellWidth = documentWith*0.18;//单元格宽度
+let cellSpace = documentWith*0.04;//单元格间隔宽度
+
+
 //获取距离上面的位置
 function getPosTop(i) {
-    return 20 + 120 * i;
+   /* return 20 + 120 * i;*/
+    return cellSpace+(cellWidth+cellSpace)*i;/*适配移动端*/
 }
 
 //获取距离左边的位置
 function getPosLeft(j) {
-    return 20 + 120 * j;
+/*    return 20 + 120 * j;*/
+    return cellSpace+(cellWidth+cellSpace)*j;/*适配移动端*/
 }
 
 function getNumberBackgroundColor(num) {

@@ -12,8 +12,12 @@ function showNumberWithAnimation(i, j, randNumber) {
         "color": getNumberColor(randNumber)
 
     }).text(randNumber).animate({
-        "width": "100px",
-        "height": "100px",
+        /*"width": "100px",*/
+        /*"height": "100px",*/
+
+        /*适配移动端*/
+        "width": cellWidth,
+        "height": cellWidth,
         "top": getPosTop(i),
         "left": getPosLeft(j)
     }, 500);
@@ -21,9 +25,9 @@ function showNumberWithAnimation(i, j, randNumber) {
 
 //通过动画移动单元格
 function showMoveAnimation(fromX, fromY, toX, toY) {
-    let numberCell = $("#number-cell-"+fromX+"-"+fromY);
+    let numberCell = $("#number-cell-" + fromX + "-" + fromY);
     numberCell.animate({
-        "top":getPosTop(toX),
-        "left":getPosLeft(toY)
-    },200);
+        "top": getPosTop(toX),
+        "left": getPosLeft(toY)
+    }, 200);
 }

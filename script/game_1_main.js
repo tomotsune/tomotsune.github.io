@@ -13,11 +13,31 @@ $(function () {
 
 //开始新游戏
 function newGame() {
+    //设置移动端尺寸
+    settingForMobile();
+
     init();
 
     //在随机的两个单元格中生成数字.
     generateOneNumber();
     generateOneNumber();
+}
+
+//重写窗口框架, 容器, 底层单元格尺寸.
+function settingForMobile() {
+    //
+    $("#header .wrapper").css("width", containerWidth);
+    $("#grid-container").css({
+        "width": containerWidth - cellSpace * 2,
+        "height": containerWidth - cellSpace * 2,
+        "padding": cellSpace,
+        "border-radius": containerWidth * 0.02,
+    });
+    $(".grid-cell").css({
+        "width": cellWidth,
+        "height": cellWidth,
+        "boder-radius": cellWidth * 0.06
+    });
 }
 
 //初始化页面
@@ -50,11 +70,13 @@ function init() {
     updateScore(score);
 }
 
+//更新上层单元格视图
 function updateView() {
     //清空所有上层单元格, 然后初始化创建.
     $(".number-cell").remove();
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
+            //动态创建上层单元格
             $("#grid-container")
                 .append("<div class='number-cell' id='number-cell-"
                     + i
@@ -66,13 +88,21 @@ function updateView() {
                 numberCell.css({
                     "width": "0",
                     "height": "0",
-                    "top": getPosTop(i) + 50,
-                    "left": getPosLeft(j) + 50
+                    /*"top": getPosTop(i) + 50,*/
+                    /*"left": getPosLeft(j) + 50*/
+
+                    /*适配移动端*/
+                    "top":getPosTop(i)+cellWidth*0.5,
+                    "left":getPosLeft(j)+cellWidth*0.5,
                 });
             } else {
                 numberCell.css({
-                    "width": "100px",
-                    "height": "100px",
+                   /* "width": "100px",*/
+                   /* "height": "100px",*/
+
+                    /*适配移动端*/
+                    "width": cellWidth,
+                    "height": cellWidth,
                     "top": getPosTop(i),
                     "left": getPosLeft(j),
                     "background-color": getNumberBackgroundColor(nums[i][j]),
@@ -81,6 +111,13 @@ function updateView() {
 
             }
             hasConflited[i][j] = false;
+
+            /*适配移动端, 移动端上层单元格基本样式设置*/
+            $(".number-cell").css({
+                "border-radius": cellWidth*0.06,
+                "font-size":cellWidth*0.5,
+                "line-height":cellWidth+"px"//需要单位
+            });
         }
     }
 }
