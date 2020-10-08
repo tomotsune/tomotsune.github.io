@@ -118,28 +118,36 @@ function generateOneNumber() {
 
 //实现键盘相应
 $(document).keydown(function (event) {
-    console.log(event);
+    event.preventDefault();//阻止事件的默认行为, 即阻止上下方向键控制滚动条滚动.
     switch (event.keyCode) {
         case 37://left
             //判断是否可以向左移动
             if (canMoveLeft(nums)) {
                 moveLeft();
                 setTimeout(generateOneNumber, 200);
+                setTimeout(isGameOver, 500);
             }
             break;
         case 38://up
             if (canMoveUp(nums)) {
                 moveUp();
                 setTimeout(generateOneNumber, 200);
+                setTimeout(isGameOver, 500);
             }
             break;
         case 39://right
             if (canMoveRight(nums)) {
                 moveRight();
                 setTimeout(generateOneNumber, 200);
+                setTimeout(isGameOver, 500);
             }
             break;
         case 40://left
+            if (canMoveDown(nums)) {
+                moveDown();
+                setTimeout(generateOneNumber, 200);
+                setTimeout(isGameOver, 500);
+            }
             break;
         default:
             break;
@@ -228,6 +236,36 @@ function moveUp() {
                         nums[i][j] = 0;
                         break;
                     } else if (nums[k][j] == nums[i][j] && noBlockVertical(j, k, i, nums) && !hasConflited[k][j]) {
+                        showMoveAnimation(i, j, k, j);
+                        nums[k][j] += nums[i][j];
+                        nums[i][j] = 0;
+                        score += nums[k][j];
+                        updateScore(score);
+
+                        hasConflited[k][j] = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateView, 200);
+}
+
+/*
+ *  向下移动
+ */
+function moveDown() {
+    for (let j = 0; j < 4; j++) {        //列元素
+        for (let i = 2; i >= 0; i--) {    //行元素, 第下往上依次判断, 最后一行不需判断
+            if (nums[i][j] != 0) {
+                for (let k = 3; k > i; k--) {  //从最下层往上找寻最佳位置.
+                    if (nums[k][j] == 0 && noBlockVertical(j, i, k, nums)) { //第j列第i-k行之间是否有障碍物.
+                        showMoveAnimation(i, j, k, j);
+                        nums[k][j] = nums[i][j];
+                        nums[i][j] = 0;
+                        break;
+                    } else if (nums[k][j] == nums[i][j] && noBlockVertical(j, i, k, nums) && !hasConflited[k][j]) {
                         showMoveAnimation(i, j, k, j);
                         nums[k][j] += nums[i][j];
                         nums[i][j] = 0;

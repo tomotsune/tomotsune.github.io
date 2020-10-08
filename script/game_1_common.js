@@ -110,7 +110,7 @@ function canMoveUp(nums) {
     for (let i = 1; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (nums[i][j] != 0) {
-                if (nums[i-1][j] == 0 || nums[i-1][j] == nums[i][j]) {
+                if (nums[i - 1][j] == 0 || nums[i - 1][j] == nums[i][j]) {
                     return true;
                 }
             }
@@ -119,9 +119,28 @@ function canMoveUp(nums) {
     return false;
 }
 
+//能否向下移动
+function canMoveDown(nums) {
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (nums[i][j] != 0) {
+                if (nums[i + 1][j] == 0 || nums[i + 1][j] == nums[i][j]) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+//能否向任意方向移动
+function canMove(nums) {
+    return canMoveLeft(nums) || canMoveRight(nums) || canMoveUp(nums) || canMoveDown(nums);
+}
+
 //判断水平方向上是否没有障碍物
 function noBlockHorizontal(row, col1, col2, nums) {
-    for (let i = col1+1; i < col2; i++) {
+    for (let i = col1 + 1; i < col2; i++) {
         if (nums[row][i] != 0) {
             return false;
         }
@@ -131,8 +150,8 @@ function noBlockHorizontal(row, col1, col2, nums) {
 
 //判断垂直方向上是否没有障碍物
 function noBlockVertical(col, row1, row2, nums) {
-    for (let i = row1+1; i < row2; i++) {
-        if(nums[i][col]!=0){
+    for (let i = row1 + 1; i < row2; i++) {
+        if (nums[i][col] != 0) {
             return false;
         }
     }
@@ -142,4 +161,11 @@ function noBlockVertical(col, row1, row2, nums) {
 //更新分数
 function updateScore(score) {
     $("#score").text(score);
+}
+
+//判断游戏是否结束 1. 没有空的单元格 & 2. 不能移动.
+function isGameOver() {
+    if (noSpace(nums) && !canMove(nums)) {
+        alert("Game Over!");
+    }
 }
