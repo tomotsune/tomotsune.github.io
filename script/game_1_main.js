@@ -7,6 +7,11 @@ let nums = [];
 let score = 0;
 let hasConflited = []; //是否已叠加, 用于解决单元格重复叠加
 
+let startX = 0;
+let startY = 0;
+let endX = 0;
+let endY = 0;
+
 $(function () {
     newGame();
 });
@@ -14,7 +19,13 @@ $(function () {
 //开始新游戏
 function newGame() {
     //设置移动端尺寸
-    settingForMobile();
+    if (documentWith > 500) {
+        containerWidth = 500;
+        cellWidth = 100;
+        cellSpace = 20;
+    } else {
+        settingForMobile();
+    }
 
     init();
 
@@ -23,9 +34,8 @@ function newGame() {
     generateOneNumber();
 }
 
-//重写窗口框架, 容器, 底层单元格尺寸.
+//重写移动端下默认CSS样式
 function settingForMobile() {
-    //
     $("#header .wrapper").css("width", containerWidth);
     $("#grid-container").css({
         "width": containerWidth - cellSpace * 2,
@@ -92,13 +102,13 @@ function updateView() {
                     /*"left": getPosLeft(j) + 50*/
 
                     /*适配移动端*/
-                    "top":getPosTop(i)+cellWidth*0.5,
-                    "left":getPosLeft(j)+cellWidth*0.5,
+                    "top": getPosTop(i) + cellWidth * 0.5,
+                    "left": getPosLeft(j) + cellWidth * 0.5,
                 });
             } else {
                 numberCell.css({
-                   /* "width": "100px",*/
-                   /* "height": "100px",*/
+                    /* "width": "100px",*/
+                    /* "height": "100px",*/
 
                     /*适配移动端*/
                     "width": cellWidth,
@@ -114,9 +124,9 @@ function updateView() {
 
             /*适配移动端, 移动端上层单元格基本样式设置*/
             $(".number-cell").css({
-                "border-radius": cellWidth*0.06,
-                "font-size":cellWidth*0.5,
-                "line-height":cellWidth+"px"//需要单位
+                "border-radius": cellWidth * 0.06,
+                "font-size": cellWidth * 0.5,
+                "line-height": cellWidth + "px"//需要单位
             });
         }
     }
@@ -153,43 +163,93 @@ function generateOneNumber() {
     showNumberWithAnimation(randX, randY, randNum);
 }
 
-//实现键盘相应
-$(document).keydown(function (event) {
-    event.preventDefault();//阻止事件的默认行为, 即阻止上下方向键控制滚动条滚动.
-    switch (event.keyCode) {
-        case 37://left
-            //判断是否可以向左移动
-            if (canMoveLeft(nums)) {
-                moveLeft();
-                setTimeout(generateOneNumber, 200);
-                setTimeout(isGameOver, 500);
+//实现键盘和触控相应
+$(document).on({
+    keydown: function (event) {
+        event.preventDefault();//阻止事件的默认行为, 即阻止上下方向键控制滚动条滚动.
+        switch (event.keyCode) {
+            case 37://left
+                //判断是否可以向左移动
+                if (canMoveLeft(nums)) {
+                    moveLeft();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+                break;
+            case 38://up
+                if (canMoveUp(nums)) {
+                    moveUp();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+                break;
+            case 39://right
+                if (canMoveRight(nums)) {
+                    moveRight();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+                break;
+            case 40://down
+                if (canMoveDown(nums)) {
+                    moveDown();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+                break;
+            default:
+                break;
+        }
+    },
+    touchstart: function (event) {
+        startX = event.originalEvent.touches[0].pageX;
+        startY = event.originalEvent.touches[0].pageY;
+    },
+    touchend: function (event) {
+        endX = event.originalEvent.changedTouches[0].pageX;
+        endY = event.originalEvent.changedTouches[0].pageY;
+
+        //判断滑动方向
+        let deltaX = endX - startX;
+        let deltaY = endY - startY;
+
+        //判断滑动距离小于一定的阈值时不做任何操作.
+        if (Math.abs(deltaX) < documentWith * 0.08 && Math.abs(deltaY) < documentWith * 0.08) {
+            return;
+        }
+
+        if (Math.abs(deltaX / deltaY) >= 1) {//水平移动
+            if (deltaX > 0) {//向右移动
+                if (canMoveRight(nums)) {
+                    moveRight();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+            } else {//向左移动
+                if (canMoveLeft(nums)) {
+                    moveLeft();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
             }
-            break;
-        case 38://up
-            if (canMoveUp(nums)) {
-                moveUp();
-                setTimeout(generateOneNumber, 200);
-                setTimeout(isGameOver, 500);
+        } else {
+            if (deltaY > 0) {//向下移动
+                if (canMoveDown(nums)) {
+                    moveDown();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
+            } else {//向上移动
+                if (canMoveUp(nums)) {
+                    moveUp();
+                    setTimeout(generateOneNumber, 200);
+                    setTimeout(isGameOver, 500);
+                }
             }
-            break;
-        case 39://right
-            if (canMoveRight(nums)) {
-                moveRight();
-                setTimeout(generateOneNumber, 200);
-                setTimeout(isGameOver, 500);
-            }
-            break;
-        case 40://left
-            if (canMoveDown(nums)) {
-                moveDown();
-                setTimeout(generateOneNumber, 200);
-                setTimeout(isGameOver, 500);
-            }
-            break;
-        default:
-            break;
+        }
     }
 });
+
 
 /*
  *  向左移动
