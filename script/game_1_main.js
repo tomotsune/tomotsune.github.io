@@ -4,6 +4,8 @@
 
 'use strict';
 let nums = [];
+let score = 0;
+let hasConflited = []; //是否已叠加, 用于解决单元格重复叠加
 
 $(function () {
     newGame();
@@ -34,13 +36,18 @@ function init() {
     //初始化数组
     for (let i = 0; i < 4; i++) {
         nums[i] = [];
+        hasConflited[i] = [];
         for (let j = 0; j < 4; j++) {
             nums[i][j] = 0;
+            hasConflited[i][j] = false;  //false表示未曾叠加.
         }
     }
 
     //动态创建上层单元格并初始化
     updateView();
+
+    score = 0;
+    updateScore(score);
 }
 
 function updateView() {
@@ -73,6 +80,7 @@ function updateView() {
                 }).text(nums[i][j]);
 
             }
+            hasConflited[i][j] = false;
         }
     }
 }
@@ -116,11 +124,16 @@ $(document).keydown(function (event) {
             //判断是否可以向左移动
             if (canMoveLeft(nums)) {
                 moveLeft();
+                setTimeout(generateOneNumber, 200);
             }
             break;
         case 38://up
             break;
         case 39://right
+            if (canMoveRight(nums)) {
+                moveRight();
+                setTimeout(generateOneNumber, 200);
+            }
             break;
         case 40://left
             break;
@@ -137,7 +150,7 @@ $(document).keydown(function (event) {
  */
 function moveLeft() {
     for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
+        for (let j = 1; j < 4; j++) {  //最左测不用判断. 从左向右判断.
             if (nums[i][j] != 0) {
                 for (let k = 0; k < j; k++) {
                     if (nums[i][k] == 0 && noBlockHorizontal(i, k, j, nums)) {//第i行的第k-j列之间是否有障碍物.
@@ -145,6 +158,49 @@ function moveLeft() {
                         showMoveAnimation(i, j, i, k);
                         nums[i][k] = nums[i][j];
                         nums[i][j] = 0;
+                        break;
+                    } else if (nums[i][k] == nums[i][j] && noBlockHorizontal(i, k, j, nums) && !hasConflited[i][k]) {
+                        showMoveAnimation(i, j, i, k);
+                        nums[i][k] += nums[i][j];
+                        nums[i][j] = 0;
+                        //统计分数
+                        score += nums[i][k];
+                        updateScore(score);
+
+                        hasConflited[i][k] = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateView, 200);
+}
+
+/*
+ *  向右移动
+ */
+function moveRight() {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 2; j >= 0; j--) { //最右侧不用判断, 从右向左判断.
+            if (nums[i][j] != 0) {
+                for (let k = 3; k > j; k--) {
+                    if (nums[i][k] == 0 && noBlockHorizontal(i, j, k, nums)) {//第i行的第j-k列之间是否有障碍物.
+                        console.log("!!!!!!!!!!!!!!!!!");
+                        //移动操作
+                        showMoveAnimation(i, j, i, k);
+                        nums[i][k] = nums[i][j];
+                        nums[i][j] = 0;
+                        break;
+                    } else if (nums[i][k] == nums[i][j] && noBlockHorizontal(i, j, k, nums) && !hasConflited[i][k]) {
+                        showMoveAnimation(i, j, i, k);
+                        nums[i][k] += nums[i][j];
+                        nums[i][j] = 0;
+                        //统计分数
+                        score += nums[i][k];
+                        updateScore(score);
+
+                        hasConflited[i][k] = true;
                         break;
                     }
                 }
