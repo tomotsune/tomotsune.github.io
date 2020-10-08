@@ -128,6 +128,10 @@ $(document).keydown(function (event) {
             }
             break;
         case 38://up
+            if (canMoveUp(nums)) {
+                moveUp();
+                setTimeout(generateOneNumber, 200);
+            }
             break;
         case 39://right
             if (canMoveRight(nums)) {
@@ -201,6 +205,36 @@ function moveRight() {
                         updateScore(score);
 
                         hasConflited[i][k] = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateView, 200);
+}
+
+/*
+ *  向上移动
+ */
+function moveUp() {
+    for (let j = 0; j < 4; j++) {        //列元素
+        for (let i = 1; i < 4; i++) {    //行元素, 第上往下依次判断, 第一行不需判断
+            if (nums[i][j] != 0) {
+                for (let k = 0; k < i; k++) {  //从最上层往下找寻最佳位置.
+                    if (nums[k][j] == 0 && noBlockVertical(j, k, i, nums)) { //第j列第k-i行之间是否有障碍物.
+                        showMoveAnimation(i, j, k, j);
+                        nums[k][j] = nums[i][j];
+                        nums[i][j] = 0;
+                        break;
+                    } else if (nums[k][j] == nums[i][j] && noBlockVertical(j, k, i, nums) && !hasConflited[k][j]) {
+                        showMoveAnimation(i, j, k, j);
+                        nums[k][j] += nums[i][j];
+                        nums[i][j] = 0;
+                        score += nums[k][j];
+                        updateScore(score);
+
+                        hasConflited[k][j] = true;
                         break;
                     }
                 }
